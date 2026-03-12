@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>OFF-ROAD TOY RENTAL | UTV Rental Salinas</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+margin:0;
+font-family:Montserrat;
+background:#0c0c0c;
+color:white;
+}
+
+header{
+text-align:center;
+padding:70px;
+border-bottom:2px solid gold;
+}
+
+header h1{
+font-family:Playfair Display;
+color:gold;
+font-size:50px;
+}
+
+.container{
+width:92%;
+max-width:1200px;
+margin:auto;
+padding:50px 0;
+}
+
+.vehicle-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:30px;
+}
+
+.vehicle{
+background:#141414;
+border-radius:10px;
+padding:20px;
+border:1px solid #333;
+transition:.3s;
+}
+
+.vehicle:hover{
+transform:scale(1.03);
+border:1px solid gold;
+}
+
+.vehicle img{
+width:100%;
+border-radius:10px;
+}
+
+.price{
+color:gold;
+font-size:22px;
+}
+
+.booking{
+margin-top:60px;
+background:#141414;
+padding:40px;
+border-radius:10px;
+}
+
+label{
+display:block;
+margin-top:15px;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:5px;
+border-radius:6px;
+border:none;
+}
+
+button{
+margin-top:20px;
+padding:15px;
+width:100%;
+background:gold;
+border:none;
+font-weight:bold;
+cursor:pointer;
+}
+
+.admin{
+display:none;
+margin-top:80px;
+background:#141414;
+padding:40px;
+border-radius:10px;
+}
+
+footer{
+margin-top:80px;
+text-align:center;
+padding:40px;
+border-top:1px solid #333;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>OFF-ROAD TOY RENTAL</h1>
+<p>Premium Off-Road Vehicle Rentals</p>
+
+</header>
+
+<div class="container">
+
+<h2 style="color:gold;">Available Vehicles</h2>
+
+<div id="vehicles" class="vehicle-grid"></div>
+
+<div class="booking">
+
+<h2 style="color:gold;">Book Your Rental</h2>
+
+<label>Name</label>
+<input>
+
+<label>Phone</label>
+<input>
+
+<label>Email</label>
+<input>
+
+<label>Select Vehicle</label>
+<select id="vehicleSelect"></select>
+
+<label>Rental Start Date</label>
+<input type="date">
+
+<label>Return Date</label>
+<input type="date">
+
+<label>Pickup or Delivery</label>
+<select>
+<option>Pickup</option>
+<option>Delivery (+$120)</option>
+</select>
+
+<label>Upload Driver License</label>
+<input type="file">
+
+<label>Upload Insurance</label>
+<input type="file">
+
+<label>Digital Signature</label>
+<input placeholder="Type Full Name">
+
+<p style="font-size:13px;color:#bbb;">
+By renting this vehicle you accept full financial responsibility for any damage,
+including collisions, dents, scratches, mechanical damage, or misuse during
+your rental period.
+</p>
+
+<button onclick="submitBooking()">Submit Booking Request</button>
+
+</div>
+
+<h2 style="color:gold;">Admin Login</h2>
+
+<input type="password" id="adminPassword" placeholder="Admin password">
+
+<button onclick="login()">Login</button>
+
+<div class="admin" id="adminPanel">
+
+<h2 style="color:gold;">Add New Vehicle</h2>
+
+<label>Vehicle Name</label>
+<input id="name">
+
+<label>Price Per Day</label>
+<input id="price">
+
+<label>Image URL</label>
+<input id="image">
+
+<button onclick="addVehicle()">Add Vehicle</button>
+
+</div>
+
+<footer>
+
+<h2 style="color:gold;">Contact</h2>
+
+<p>Tony Campos</p>
+<p>📞 831-258-7911</p>
+<p>📧 Campostony445@gmail.com</p>
+
+</footer>
+
+</div>
+
+<script>
+
+let vehicles = JSON.parse(localStorage.getItem("vehicles")) || [
+
+{
+name:"Can-Am Maverick X3",
+price:500,
+image:"https://upload.wikimedia.org/wikipedia/commons/7/7a/Can-Am_Maverick_X3.jpg"
+},
+
+{
+name:"2020 Jeep Wrangler",
+price:500,
+image:"https://upload.wikimedia.org/wikipedia/commons/9/9e/2018_Jeep_Wrangler.jpg"
+},
+
+{
+name:"2025 GMC Sierra HD AT4",
+price:600,
+image:"https://upload.wikimedia.org/wikipedia/commons/7/70/2020_GMC_Sierra_HD.jpg"
+}
+
+]
+
+function displayVehicles(){
+
+let container=document.getElementById("vehicles")
+let select=document.getElementById("vehicleSelect")
+
+container.innerHTML=""
+select.innerHTML=""
+
+vehicles.forEach(v=>{
+
+container.innerHTML+=`
+<div class="vehicle">
+<img src="${v.image}">
+<h3>${v.name}</h3>
+<div class="price">$${v.price}/day</div>
+</div>
+`
+
+select.innerHTML+=`<option>${v.name}</option>`
+
+})
+
+}
+
+function addVehicle(){
+
+let name=document.getElementById("name").value
+let price=document.getElementById("price").value
+let image=document.getElementById("image").value
+
+vehicles.push({name,price,image})
+
+localStorage.setItem("vehicles",JSON.stringify(vehicles))
+
+displayVehicles()
+
+}
+
+function login(){
+
+let pass=document.getElementById("adminPassword").value
+
+if(pass==="offroadadmin"){
+
+document.getElementById("adminPanel").style.display="block"
+
+}else{
+
+alert("Wrong password")
+
+}
+
+}
+
+function submitBooking(){
+
+alert("Booking request submitted! Tony will contact you shortly.")
+
+}
+
+displayVehicles()
+
+</script>
+
+</body>
+</html>
