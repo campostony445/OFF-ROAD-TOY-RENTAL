@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OFF-ROAD TOY RENTAL</title>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+margin:0;
+background:#0a0a0a;
+color:white;
+}
+
+header{
+background:black;
+padding:20px;
+text-align:center;
+border-bottom:2px solid #333;
+}
+
+h1{
+font-size:40px;
+letter-spacing:3px;
+}
+
+.container{
+width:90%;
+margin:auto;
+max-width:1200px;
+}
+
+.vehicles{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+margin-top:40px;
+}
+
+.vehicle{
+background:#111;
+padding:20px;
+border-radius:12px;
+border:1px solid #333;
+}
+
+.vehicle img{
+width:100%;
+border-radius:10px;
+}
+
+.price{
+font-size:22px;
+color:#00ff9c;
+}
+
+button{
+background:#00ff9c;
+border:none;
+padding:12px 20px;
+font-size:16px;
+border-radius:6px;
+cursor:pointer;
+margin-top:10px;
+}
+
+.booking{
+margin-top:60px;
+background:#111;
+padding:30px;
+border-radius:10px;
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin-top:10px;
+margin-bottom:20px;
+border-radius:6px;
+border:none;
+}
+
+.calendar{
+margin-top:60px;
+}
+
+footer{
+margin-top:60px;
+background:#000;
+padding:30px;
+text-align:center;
+}
+
+.signature{
+border:1px solid white;
+height:120px;
+}
+
+.admin{
+position:fixed;
+top:20px;
+right:20px;
+}
+
+.dashboard{
+display:none;
+background:#111;
+padding:20px;
+margin-top:40px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>OFF-ROAD TOY RENTAL</h1>
+
+<p>
+Tony Campos<br>
+📞 831-258-7911<br>
+✉ Campostony445@gmail.com
+</p>
+
+</header>
+
+<div class="container">
+
+<h2>Our Vehicles</h2>
+
+<div class="vehicles">
+
+<div class="vehicle">
+<img src="https://images.unsplash.com/photo-1600284480406-618f6f0b2a64">
+<h3>Can-Am Maverick X3</h3>
+<p class="price">$500 / Day</p>
+</div>
+
+<div class="vehicle">
+<img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70">
+<h3>2020 Jeep Wrangler</h3>
+<p class="price">$500 / Day</p>
+</div>
+
+<div class="vehicle">
+<img src="https://images.unsplash.com/photo-1542367597-8849eb9701db">
+<h3>2025 GMC Sierra HD AT4</h3>
+<p class="price">$600 / Day</p>
+</div>
+
+</div>
+
+
+<div class="calendar">
+
+<h2>Vehicle Availability</h2>
+
+<div id="calendar"></div>
+
+</div>
+
+
+
+<div class="booking">
+
+<h2>Rental Booking Request</h2>
+
+<form id="bookingForm">
+
+<label>Name</label>
+<input type="text" required>
+
+<label>Select Vehicle</label>
+<select>
+<option>Can-Am Maverick X3</option>
+<option>2020 Jeep Wrangler</option>
+<option>2025 GMC Sierra HD AT4</option>
+</select>
+
+<label>Rental Date</label>
+<input type="date" required>
+
+<label>Return Date</label>
+<input type="date" required>
+
+<label>Pickup or Delivery</label>
+<select>
+<option>Pickup</option>
+<option>Delivery (+$120)</option>
+</select>
+
+<label>Upload Driver License</label>
+<input type="file" required>
+
+<label>Upload Insurance</label>
+<input type="file" required>
+
+<h3>Rental Agreement</h3>
+
+<p>
+By signing below you agree that you are
+100% responsible for all damages including
+collisions, dents, scratches or repair costs.
+</p>
+
+<canvas class="signature"></canvas>
+
+<button type="submit">
+Submit Booking Request
+</button>
+
+</form>
+
+</div>
+
+
+
+<div class="dashboard" id="dashboard">
+
+<h2>Owner Dashboard</h2>
+
+<p>View bookings here.</p>
+
+</div>
+
+</div>
+
+<footer>
+
+<p>© 2026 OFF-ROAD TOY RENTAL</p>
+
+</footer>
+
+
+
+<div class="admin">
+
+<button onclick="adminLogin()">Admin</button>
+
+</div>
+
+
+<script>
+
+var calendarEl=document.getElementById('calendar');
+
+var calendar=new FullCalendar.Calendar(calendarEl,{
+initialView:'dayGridMonth',
+events:[]
+});
+
+calendar.render();
+
+
+
+function adminLogin(){
+
+var pass=prompt("Admin Password")
+
+if(pass==="TonyAdmin123"){
+
+document.getElementById("dashboard").style.display="block"
+
+}else{
+
+alert("Wrong password")
+
+}
+
+}
+
+
+
+document.getElementById("bookingForm").addEventListener("submit",function(e){
+
+e.preventDefault()
+
+alert("Booking request sent!")
+
+})
+
+</script>
+
+</body>
+</html>
